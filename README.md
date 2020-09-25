@@ -19,3 +19,21 @@ see [the main project website](https://www.liquibase.org/).
 
 Want to file a bug, contribute some code, or improve documentation? Excellent! Read up on our
 guidelines for [contributing](https://www.liquibase.org/community/index.html)!
+
+# How to create AS400 DB i export
+Run liquibase.integration.commandline.Main with following parameters:
+- --changeLogFile=export/changelog.xml
+- --url=jdbc:as400://0.0.0.0:000?package=testdb
+- --driver=com.ibm.as400.access.AS400JDBCDriver
+- --classpath=path/to/as400-driver/jt400.jar
+- --username=user
+- --password=pass
+- --schemas=TESTDB
+- --defaultSchemaName=TESTDB
+- --liquibaseSchemaName=TESTDB
+- --defaultCatalogName=TESTDB
+- --dataOutputDirectory=export
+- --includeSchema=true
+- --logLevel=debug generateChangeLog
+
+Check export result in folder "export"

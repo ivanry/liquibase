@@ -82,34 +82,36 @@ public class ForeignKeySnapshotGenerator extends JdbcSnapshotGenerator {
 
     @Override
     protected void addTo(DatabaseObject foundObject, DatabaseSnapshot snapshot) throws DatabaseException, InvalidExampleException {
-        if (!snapshot.getSnapshotControl().shouldInclude(ForeignKey.class)) {
-            return;
-        }
-
-        if (foundObject instanceof Table) {
-            Table table = (Table) foundObject;
-            Database database = snapshot.getDatabase();
-            Schema schema;
-            schema = table.getSchema();
-
-
-            Set<String> seenFks = new HashSet<>();
-            List<CachedRow> importedKeyMetadataResultSet;
-            try {
-                importedKeyMetadataResultSet = ((JdbcDatabaseSnapshot) snapshot).getMetaDataFromCache().getForeignKeys(((AbstractJdbcDatabase) database)
-                                .getJdbcCatalogName(schema), ((AbstractJdbcDatabase) database).getJdbcSchemaName(schema),
-                        database.correctObjectName(table.getName(), Table.class), null);
-
-                for (CachedRow row : importedKeyMetadataResultSet) {
-                    ForeignKey fk = new ForeignKey().setName(row.getString("FK_NAME")).setForeignKeyTable(table);
-                    if (seenFks.add(fk.getName())) {
-                        table.getOutgoingForeignKeys().add(fk);
-                    }
-                }
-            } catch (Exception e) {
-                throw new DatabaseException(e);
-            }
-        }
+        // Skip constraints generation because generateChangeLog command fails on AS400 DB i
+        return;
+//        if (!snapshot.getSnapshotControl().shouldInclude(ForeignKey.class)) {
+//            return;
+//        }
+//
+//        if (foundObject instanceof Table) {
+//            Table table = (Table) foundObject;
+//            Database database = snapshot.getDatabase();
+//            Schema schema;
+//            schema = table.getSchema();
+//
+//
+//            Set<String> seenFks = new HashSet<>();
+//            List<CachedRow> importedKeyMetadataResultSet;
+//            try {
+//                importedKeyMetadataResultSet = ((JdbcDatabaseSnapshot) snapshot).getMetaDataFromCache().getForeignKeys(((AbstractJdbcDatabase) database)
+//                                .getJdbcCatalogName(schema), ((AbstractJdbcDatabase) database).getJdbcSchemaName(schema),
+//                        database.correctObjectName(table.getName(), Table.class), null);
+//
+//                for (CachedRow row : importedKeyMetadataResultSet) {
+//                    ForeignKey fk = new ForeignKey().setName(row.getString("FK_NAME")).setForeignKeyTable(table);
+//                    if (seenFks.add(fk.getName())) {
+//                        table.getOutgoingForeignKeys().add(fk);
+//                    }
+//                }
+//            } catch (Exception e) {
+//                throw new DatabaseException(e);
+//            }
+//        }
     }
 
     @Override
