@@ -51,8 +51,8 @@
 
     <properties>
         <liquibase.base.version>4.0.1</liquibase.base.version>
-        <liquibase.version.qualifier>-local</liquibase.version.qualifier>
-        <liquibase.version.snapshot>-SNAPSHOT</liquibase.version.snapshot>
+        <liquibase.version.qualifier>-DB-i-custom</liquibase.version.qualifier>
+        <liquibase.version.snapshot>-RELEASE</liquibase.version.snapshot>
         <liquibase.version>${liquibase.base.version}${liquibase.version.qualifier}${liquibase.version.snapshot}</liquibase.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
